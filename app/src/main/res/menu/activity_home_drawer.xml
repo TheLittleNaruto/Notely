@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/nav_filter"
+        android:icon="@drawable/ic_action_close"
+        android:title="@string/nav_text_filter" />
+
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/nav_hearted"
+            android:icon="@drawable/ic_action_check"
+            android:title="@string/nav_text_hearted" />
+        <item
+            android:id="@+id/nav_favorite"
+            android:icon="@drawable/ic_action_check"
+            android:title="@string/nav_text_favorite" />
+        <item
+            android:id="@+id/nav_poems"
+            android:icon="@drawable/ic_action_check"
+            android:title="@string/nav_text_poems" />
+        <item
+            android:id="@+id/nav_story"
+            android:icon="@drawable/ic_action_check"
+            android:title="@string/nav_text_story" />
+    </group>
+
+</menu>

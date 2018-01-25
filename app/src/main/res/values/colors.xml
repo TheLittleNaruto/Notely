@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F5F5F5</color>
+    <color name="colorPrimaryDark">#FF737070</color>
+    <color name="colorAccent">#FF737070</color>
+
+    <color name="checked">#4FC0A6</color>
+    <color name="unchecked">#8B8B8B</color>
+
+    <color name="color_add_note">#e91c1c</color>
+    <color name="color_add_note_pressed">#6b0606</color>
+
+    <color name="color_apply_button_background">#4E4E4E</color>
+    <color name="color_navigation_drawer_background">#4E4E4E</color>
+    <color name="color_text_description">#AAAAAA</color>
+    <color name="color_text_date">#D7D7D7</color>
+</resources>
