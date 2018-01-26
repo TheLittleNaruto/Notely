@@ -2,19 +2,17 @@ package com.phonepe.notely.ui.adapter
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
-
 import com.phonepe.notely.R
 import com.phonepe.notely.dao.model.Note
-import com.phonepe.notely.utils.DateFormatter
-
 import java.util.ArrayList
 import java.util.Arrays
+import android.databinding.DataBindingUtil.inflate
+import com.phonepe.notely.databinding.NoteListItemBinding
+
 
 /**
  * Created by Kumar Gaurav on 1/24/2018.
@@ -24,9 +22,9 @@ import java.util.Arrays
  */
 
 
-class NoteListAdapter(public val notes: List<Note>, private val mNoteItemListener: NoteItemListener) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>(), Filterable {
-    public var notesFiltered: List<Note>
-    public var notesList: List<Note>
+class NoteListAdapter(val notes: List<Note>, private val mNoteItemListener: NoteItemListener) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>(), Filterable {
+    var notesFiltered: List<Note>
+    var notesList: List<Note>
     var filtered = false
 
     public interface NoteItemListener {
@@ -35,19 +33,12 @@ class NoteListAdapter(public val notes: List<Note>, private val mNoteItemListene
         fun onClickNote(note: Note, position: Int)
     }
 
-    public class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val title: TextView
-        val description: TextView
-        val created_at: TextView
-        val favorite: CheckBox
-        val heart: CheckBox
+    public class NoteViewHolder(binding: NoteListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        var mBinding: NoteListItemBinding
 
         init {
-            title = view.findViewById(R.id.title)
-            description = view.findViewById(R.id.description)
-            created_at = view.findViewById(R.id.created_at)
-            favorite = view.findViewById(R.id.favorite)
-            heart = view.findViewById(R.id.heart)
+           mBinding = binding
         }
     }
 
@@ -57,35 +48,31 @@ class NoteListAdapter(public val notes: List<Note>, private val mNoteItemListene
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-                .inflate(R.layout.note_list_item, parent, false)
-
-        return NoteViewHolder(itemView)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding: NoteListItemBinding = inflate(inflater, R.layout.note_list_item, parent, false)
+        return NoteViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notesFiltered[position]
-        holder.title.text = note.title
-        holder.description.text = note.description
-        holder.created_at.text = DateFormatter.getFormattedDate(note.lastUpdated)
-        holder.heart.isChecked = note.isHearted
-        holder.favorite.isChecked = note.isFavorite
-
+        holder.mBinding.note = note
         setListeners(holder, note, position)
 
     }
 
     private fun setListeners(holder: NoteViewHolder, note: Note, position: Int) {
 
-        holder.itemView.setOnClickListener { mNoteItemListener.onClickNote(note, position) }
+        holder.mBinding.root.setOnClickListener { mNoteItemListener.onClickNote(note, position) }
 
-        holder.heart.setOnClickListener {
-            note.isHearted = holder.heart.isChecked
+        val heartCheckBox = holder.mBinding.root.findViewById<CheckBox>(R.id.heart)
+        heartCheckBox.setOnClickListener {
+            note.isHearted = heartCheckBox.isChecked
             mNoteItemListener.onHeartNote(note)
         }
 
-        holder.favorite.setOnClickListener {
-            note.isFavorite = holder.favorite.isChecked
+        val favoriteCheckBox = holder.mBinding.root.findViewById<CheckBox>(R.id.favorite)
+        favoriteCheckBox.setOnClickListener {
+            note.isFavorite = favoriteCheckBox.isChecked
             mNoteItemListener.onFavoriteNote(note)
         }
     }
@@ -145,6 +132,12 @@ class NoteListAdapter(public val notes: List<Note>, private val mNoteItemListene
                 notifyDataSetChanged()
             }
         }
+    }
+
+    fun updateNoteList(t: List<Note>) {
+        this.notesList = t
+        this.notesFiltered = t
+        notifyDataSetChanged()
     }
 
 

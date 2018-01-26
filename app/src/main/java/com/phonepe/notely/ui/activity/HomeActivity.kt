@@ -33,7 +33,7 @@ import android.support.v7.widget.DividerItemDecoration
  * Activity to display list of notes.
  */
 
-class HomeActivity : AppCompatActivity(), View.OnClickListener, NoteListAdapter.NoteItemListener {
+class HomeActivity : BaseActivity(), View.OnClickListener, NoteListAdapter.NoteItemListener {
 
 
     lateinit var homeBinding: ActivityHomeBinding
@@ -155,8 +155,7 @@ class HomeActivity : AppCompatActivity(), View.OnClickListener, NoteListAdapter.
     val observer = Observer<List<Note>> { t ->
         if (t != null) {
             note_list_recycler_view.post({
-                noteListAdapter.notesFiltered = t
-                noteListAdapter.notifyDataSetChanged()
+                noteListAdapter.updateNoteList(t)
 
             })
         }

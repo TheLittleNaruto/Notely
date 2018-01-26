@@ -1,5 +1,7 @@
 package com.phonepe.notely.utils
 
+import android.databinding.BindingAdapter
+import android.widget.TextView
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -11,6 +13,7 @@ import java.util.*
 class DateFormatter {
 
     companion object {
+
         fun getFormattedDate(date: String): String{
             val cal = Calendar.getInstance()
             val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
@@ -36,7 +39,13 @@ class DateFormatter {
             return getMonthName(cal.get(Calendar.MONTH)) + " at " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.SECOND) + " " + getAMOrPM(cal.get(Calendar.AM_PM))
         }
 
-        fun getDayName(day: Int):String {
+        @JvmStatic @BindingAdapter("formattedDate")
+        fun getAndSetFormattedDate(view: TextView, date: String?){
+            if(date != null)
+                view.setText(getFormattedDate(date))
+        }
+
+        private fun getDayName(day: Int):String {
             when (day) {
                 1 -> return "Sunday"
                 2 -> return "Monday"
@@ -49,7 +58,7 @@ class DateFormatter {
             return ""
         }
 
-        fun getMonthName(month: Int):String {
+        private fun getMonthName(month: Int):String {
             when (month) {
                 1 -> return "Jan"
                 2 -> return "Feb"
@@ -67,7 +76,7 @@ class DateFormatter {
             return ""
         }
 
-        fun getAMOrPM(AM_OR_PM: Int): String{
+        private fun getAMOrPM(AM_OR_PM: Int): String{
             when(AM_OR_PM){
                 0 -> return "AM"
                 1 -> return "PM"
