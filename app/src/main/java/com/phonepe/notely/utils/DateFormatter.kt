@@ -8,12 +8,18 @@ import java.util.*
 /**
  * Created by Kumar Gaurav on 1/25/2018.
  *
- * A date formatter class to show date in used understandable format.
+ * A date formatter class to show date in user understandable format.
  */
 class DateFormatter {
 
     companion object {
 
+        /*
+        * method to get formatted date
+        *
+        * @param date is a date string which is to be formatted
+        *
+        * */
         fun getFormattedDate(date: String): String{
             val cal = Calendar.getInstance()
             val sdf = SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH)
@@ -39,6 +45,12 @@ class DateFormatter {
             return getMonthName(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.DAY_OF_MONTH) + " at " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.SECOND) + " " + getAMOrPM(cal.get(Calendar.AM_PM))
         }
 
+        /*
+        * to get name of the day from day integer
+        *
+        * @param day which name to be fetched
+        *
+        * */
         private fun getDayName(day: Int):String {
             when (day) {
                 1 -> return "Sunday"
@@ -52,6 +64,12 @@ class DateFormatter {
             return ""
         }
 
+        /*
+        * to get name of the month from month integer
+        *
+        * @param month which name to be fetched
+        *
+        * */
         private fun getMonthName(month: Int):String {
             when (month) {
                 0 -> return "Jan"
@@ -70,6 +88,12 @@ class DateFormatter {
             return ""
         }
 
+        /*
+        * to get AM or PM string
+        *
+        * @param AM_OR_PM
+        *
+        * */
         private fun getAMOrPM(AM_OR_PM: Int): String{
             when(AM_OR_PM){
                 0 -> return "AM"
