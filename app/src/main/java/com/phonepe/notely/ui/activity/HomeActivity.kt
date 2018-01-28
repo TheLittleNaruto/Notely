@@ -84,7 +84,7 @@ class HomeActivity : BaseActivity(), View.OnClickListener, NoteListAdapter.NoteI
 
         setListeners()
 
-        filter_list_view.adapter = FilterAdapter(this, Filter.getFilterList())
+        homeBinding.context = this
 
     }
 
