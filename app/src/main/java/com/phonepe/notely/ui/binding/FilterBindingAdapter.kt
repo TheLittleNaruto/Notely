@@ -9,7 +9,7 @@ import com.phonepe.notely.ui.model.Filter
 /**
  * Created by Kumar Gaurav on 1/28/2018.
  */
-class FilterBindinAdapter {
+class FilterBindingAdapter {
 
     companion object {
         @JvmStatic @BindingAdapter("adapter")
