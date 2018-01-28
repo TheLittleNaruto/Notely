@@ -25,7 +25,6 @@ import com.phonepe.notely.databinding.NoteListItemBinding
 class NoteListAdapter(val notes: List<Note>, private val mNoteItemListener: NoteItemListener) : RecyclerView.Adapter<NoteListAdapter.NoteViewHolder>(), Filterable {
     var notesFiltered: List<Note>
     var notesList: List<Note>
-    var filtered = false
 
     public interface NoteItemListener {
         fun onFavoriteNote(note: Note)
@@ -86,16 +85,9 @@ class NoteListAdapter(val notes: List<Note>, private val mNoteItemListener: Note
             override fun performFiltering(charSequence: CharSequence): Filter.FilterResults {
                 val charString = charSequence.toString()
                 if (charString.isEmpty()) {
-                    if (!filtered) {
-                        notesList = notesFiltered
-                    }
                     notesFiltered = notesList
 
-                    filtered = false
-
                 } else {
-
-                    filtered = true
 
                     val filteredList = ArrayList<Note>()
                     val filters = Arrays.asList(*charString.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray())
@@ -103,7 +95,6 @@ class NoteListAdapter(val notes: List<Note>, private val mNoteItemListener: Note
                     val isHeart = filters.contains("Hearted")
                     val isFavorite = filters.contains("Favorite")
 
-                    notesList = notesFiltered
                     for (row in notesList) {
                         var shouldFilter = true
 
