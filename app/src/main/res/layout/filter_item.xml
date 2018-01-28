@@ -1,28 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.phonepe.notely.ui.custom.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minHeight="?android:listPreferredItemHeight"
-    android:orientation="horizontal"
-    android:gravity="center_vertical">
+<layout>
+    <data>
 
-    <TextView android:id="@+id/filter"
-        android:duplicateParentState="true"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:textAppearance="?android:textAppearanceMedium"
-        android:textColor="@color/filter_selector" />
+        <variable
+            name="filter"
+            type="String" />
+    </data>
 
-    <ImageView android:src="@drawable/filter_drawable_selector"
-        android:duplicateParentState="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        />
+    <com.phonepe.notely.ui.custom.CheckableLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:minHeight="?android:listPreferredItemHeight"
+        android:orientation="horizontal">
 
-</com.phonepe.notely.ui.custom.CheckableLinearLayout>
+        <TextView
+            android:id="@+id/filter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:duplicateParentState="true"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textColor="@color/filter_selector"
+            android:text="@{filter}"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:duplicateParentState="true"
+            android:gravity="center"
+            android:src="@drawable/filter_drawable_selector" />
+
+    </com.phonepe.notely.ui.custom.CheckableLinearLayout>
+</layout>
