@@ -36,13 +36,7 @@ class DateFormatter {
             }else if(calWeek == todaysWeek){
                 return getDayName(cal.get(Calendar.DAY_OF_WEEK)) + " at " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.SECOND) + " " + getAMOrPM(cal.get(Calendar.AM_PM))
             }
-            return getMonthName(cal.get(Calendar.MONTH)) + " at " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.SECOND) + " " + getAMOrPM(cal.get(Calendar.AM_PM))
-        }
-
-        @JvmStatic @BindingAdapter("formattedDate")
-        fun getAndSetFormattedDate(view: TextView, date: String?){
-            if(date != null)
-                view.setText(getFormattedDate(date))
+            return getMonthName(cal.get(Calendar.MONTH)) + " " + cal.get(Calendar.DAY_OF_MONTH) + " at " + cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.SECOND) + " " + getAMOrPM(cal.get(Calendar.AM_PM))
         }
 
         private fun getDayName(day: Int):String {
@@ -60,18 +54,18 @@ class DateFormatter {
 
         private fun getMonthName(month: Int):String {
             when (month) {
-                1 -> return "Jan"
-                2 -> return "Feb"
-                3 -> return "Mar"
-                4 -> return "Apr"
-                5 -> return "May"
-                6 -> return "Jun"
-                7 -> return "Jul"
-                8 -> return "Aug"
-                9 -> return "Sep"
-                10 -> return "Oct"
-                11 -> return "Nov"
-                12 -> return "Dec"
+                0 -> return "Jan"
+                1 -> return "Feb"
+                2 -> return "Mar"
+                3 -> return "Apr"
+                4 -> return "May"
+                5 -> return "Jun"
+                6 -> return "Jul"
+                7 -> return "Aug"
+                8 -> return "Sep"
+                9 -> return "Oct"
+                10 -> return "Nov"
+                11 -> return "Dec"
             }
             return ""
         }
