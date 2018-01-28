@@ -66,7 +66,7 @@
         <TextView
             android:id="@+id/created_at"
             style="@style/date_text_view_style"
-            app:formattedDate="@{note.lastUpdated}"
+            app:formatDate="@{note.lastUpdated}"
             />
 
     </LinearLayout>

@@ -11,11 +11,10 @@ import com.phonepe.notely.viewmodels.NoteViewModel
 import kotlinx.android.synthetic.main.activity_note_view.*
 import java.util.*
 import android.arch.lifecycle.ViewModelProviders
-import android.view.View
-import com.phonepe.notely.utils.DateFormatter
+import android.databinding.DataBindingUtil
 import kotlinx.android.synthetic.main.new_or_edit_mode_layout.*
-import kotlinx.android.synthetic.main.view_mode_layout.*
 import android.support.design.widget.Snackbar
+import com.phonepe.notely.databinding.ActivityNoteViewBinding
 
 
 /*
@@ -24,7 +23,7 @@ import android.support.design.widget.Snackbar
 
 class NoteActivity : AppCompatActivity(), NoteViewModel.CallBack {
 
-
+    lateinit var noteBinding: ActivityNoteViewBinding
     var mode: Mode = Mode.NEW
     var mNote: Note? = null
     lateinit var noteViewModel : NoteViewModel
@@ -37,38 +36,26 @@ class NoteActivity : AppCompatActivity(), NoteViewModel.CallBack {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_view)
+        noteBinding = DataBindingUtil.setContentView(this, R.layout.activity_note_view)
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         noteViewModel = ViewModelProviders.of(this).get(NoteViewModel::class.java)
 
         getModeAndUpdateUIData()
-        handleUIOnMode()
     }
 
-    //handle ui based on mode
-    private fun handleUIOnMode() {
-        if (mode == Mode.VIEW){
-            view_mode_layout.visibility = View.VISIBLE
-            new_or_edit_mode_layout.visibility = View.GONE
-        }else{
-            view_mode_layout.visibility = View.GONE
-            new_or_edit_mode_layout.visibility = View.VISIBLE
-        }
-    }
+
 
     //show data w.r.t mode
     private fun getModeAndUpdateUIData() {
         mode = intent.getSerializableExtra(MODE) as Mode
+
+        noteBinding.mode = mode
+
         if (mode == Mode.EDIT || mode == Mode.VIEW) {
             mNote = intent.getParcelableExtra<Note>(NOTE)
 
-            title_edit_text.setText(mNote!!.title)
-            description_edit_text.setText(mNote!!.description)
-
-            title_text_view.setText(mNote!!.title)
-            description_text_view.setText(mNote!!.description)
-            lastUpdatedAt.setText(DateFormatter.getFormattedDate(mNote!!.lastUpdated))
+            noteBinding.note = mNote!!
         }
     }
 
@@ -91,23 +78,17 @@ class NoteActivity : AppCompatActivity(), NoteViewModel.CallBack {
 
         when(item!!.itemId){
             R.id.action_edit -> {
-                mode = Mode.EDIT;
-                invalidateOptionsMenu()
-                handleUIOnMode()
+                onActionMenuClick(Mode.EDIT)
             }
 
             R.id.action_undo -> {
-                mode = Mode.VIEW;
-                invalidateOptionsMenu()
-                handleUIOnMode()
+                onActionMenuClick(Mode.VIEW)
             }
 
             R.id.action_save -> {
 
                 if (title_edit_text.text.isEmpty() || description_edit_text.text.isEmpty()){
-                    val mySnackbar = Snackbar.make(root_coordinator_layout,
-                            R.string.empty_title_desc, Snackbar.LENGTH_LONG)
-                    mySnackbar.show()
+                    showErrorMessage()
 
                 }else {
                     if (mNote != null) {
@@ -123,6 +104,19 @@ class NoteActivity : AppCompatActivity(), NoteViewModel.CallBack {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun showErrorMessage() {
+        val mySnackbar = Snackbar.make(root_coordinator_layout,
+                R.string.empty_title_desc, Snackbar.LENGTH_LONG)
+        mySnackbar.show()
+    }
+
+    private fun onActionMenuClick(mode: Mode) {
+        this.mode = mode;
+        noteBinding.mode = mode
+        noteBinding.note = mNote
+        invalidateOptionsMenu()
     }
 
     //add note

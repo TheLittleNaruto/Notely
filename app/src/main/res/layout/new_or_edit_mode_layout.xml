@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_note_view">
+<layout>
 
-    <com.phonepe.notely.ui.custom.NoeTitleEditText
-        android:id="@+id/title_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/hint_add_title"
-        android:inputType="text"
-        android:minHeight="56dp" />
+    <data>
+        <import type="com.phonepe.notely.ui.model.Mode" />
+        <variable
+            name="note"
+            type="com.phonepe.notely.dao.model.Note" />
 
-    <EditText
-        android:id="@+id/description_edit_text"
+        <variable
+            name="mode"
+            type="com.phonepe.notely.ui.model.Mode" />
+
+    </data>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/title_edit_text"
-        android:gravity="top|start"
-        android:hint="@string/hint_add_description"
-        android:inputType="textMultiLine"
-        android:maxLines="15"
-        android:padding="5dp" />
-</RelativeLayout>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/activity_note_view">
+
+        <com.phonepe.notely.ui.custom.NoeTitleEditText
+            android:id="@+id/title_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_add_title"
+            android:inputType="text"
+            android:minHeight="56dp"
+            android:text='@{note != null ? note.title : "" }'/>
+
+        <EditText
+            android:id="@+id/description_edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/title_edit_text"
+            android:gravity="top|start"
+            android:hint="@string/hint_add_description"
+            android:inputType="textMultiLine"
+            android:maxLines="15"
+            android:padding="5dp"
+            android:text='@{note != null ? note.description : ""}'/>
+    </RelativeLayout>
+</layout>

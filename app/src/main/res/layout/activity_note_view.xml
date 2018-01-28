@@ -1,37 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:bind="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.phonepe.notely.ui.model.Mode" />
+        <import type="android.view.View" />
+        <variable
+            name="note"
+            type="com.phonepe.notely.dao.model.Note" />
 
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/root_coordinator_layout"
-    tools:context=".ui.activity.NoteActivity">
+        <variable
+            name="mode"
+            type="com.phonepe.notely.ui.model.Mode" />
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/abl_note"
+    </data>
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/root_coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.NoteActivity">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/abl_note"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-    </android.support.design.widget.AppBarLayout>
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <include
-        android:id="@+id/new_or_edit_mode_layout"
-        layout="@layout/new_or_edit_mode_layout"
-        android:visibility="gone"/>
+        </android.support.design.widget.AppBarLayout>
 
-    <include
-        android:id="@+id/view_mode_layout"
-        layout="@layout/view_mode_layout"
-        android:visibility="gone"/>
+        <include
+            android:id="@+id/new_or_edit_mode_layout"
+            layout="@layout/new_or_edit_mode_layout"
+            bind:mode="@{mode}"
+            bind:note="@{note}"
+            android:visibility="@{mode == Mode.EDIT || mode == Mode.NEW ? View.VISIBLE: View.GONE}" />
+
+        <include
+            android:id="@+id/view_mode_layout"
+            layout="@layout/view_mode_layout"
+            android:visibility="@{mode == Mode.VIEW ? View.VISIBLE: View.GONE}"
+            bind:note="@{note}"
+            bind:mode="@{mode}" />
 
 
-</android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</layout>
